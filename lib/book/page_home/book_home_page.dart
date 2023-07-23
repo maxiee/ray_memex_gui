@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ray_memex_gui/book/page_home/book_home_model.dart';
 import 'package:ray_memex_gui/book/page_home/tabs/book_list_tab.dart';
+import 'package:ray_memex_gui/book/page_home/tabs/book_tools_tab.dart';
 
 class BookHomePage extends StatefulWidget {
   const BookHomePage({super.key});
@@ -29,7 +30,11 @@ class _BookHomePageState extends State<BookHomePage> {
       builder: (context, child) => Scaffold(
         appBar: AppBar(title: const Text("书库")),
         body: Stack(
-          children: [if (_selectedIndex == 0) const BookListTab(), Container()],
+          children: [
+            if (_selectedIndex == 0) const BookListTab(),
+            if (_selectedIndex == 1) const BookToolsTab(),
+            Container()
+          ],
         ),
         bottomNavigationBar: BottomNavigationBar(
           // 添加的底部导航栏
