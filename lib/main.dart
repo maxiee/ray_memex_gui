@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ray_memex_gui/api/api_book.dart';
-import 'package:ray_memex_gui/book/book_home_page.dart';
+import 'package:ray_memex_gui/book/page_home/book_home_page.dart';
 
 void main() {
   runApp(const MyApp());

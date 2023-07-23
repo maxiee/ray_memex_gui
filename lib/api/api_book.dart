@@ -9,7 +9,9 @@ class ApiBook {
       'pageSize': pageSize,
     });
     if (response.statusCode == 200) {
-      return response.data;
+      return (response.data as List)
+          .map((e) => e as Map<String, dynamic>)
+          .toList();
     } else {
       return null;
     }
