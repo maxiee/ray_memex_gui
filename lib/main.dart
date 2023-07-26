@@ -1,5 +1,8 @@
+import 'package:desktop_drop/desktop_drop.dart';
 import 'package:flutter/material.dart';
+import 'package:ray_memex_gui/api/api_book.dart';
 import 'package:ray_memex_gui/book/page_home/book_home_page.dart';
+import 'package:ray_memex_gui/widgets/drop_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,6 +39,18 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
+  onUploadFile(String filePath) {
+    if (filePath.endsWith('.pdf')) {
+      ApiBook.uploadPdf(filePath).then((value) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('File uploaded successfully!'),
+          ),
+        );
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,6 +62,13 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            DropTarget(
+                onDragDone: (details) {
+                  if (details.files.isNotEmpty) {
+                    onUploadFile(details.files.first.path);
+                  }
+                },
+                child: DropWidget()),
             MaterialButton(
                 onPressed: () => Navigator.of(context).push(
                       MaterialPageRoute(

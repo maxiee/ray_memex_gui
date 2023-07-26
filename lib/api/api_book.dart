@@ -16,4 +16,17 @@ class ApiBook {
       return null;
     }
   }
+
+  static Future<dynamic> uploadPdf(String filePath) async {
+    final dio = Dio();
+    final response = await dio.post('http://localhost:9003/book/pdf/upload',
+        data: FormData.fromMap({
+          'file': await MultipartFile.fromFile(filePath),
+        }));
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      return null;
+    }
+  }
 }
