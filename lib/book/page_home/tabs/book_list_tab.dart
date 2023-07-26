@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:ray_memex_gui/api/api_image.dart';
 import 'package:ray_memex_gui/book/page_home/book_home_model.dart';
 
 class BookListTab extends StatefulWidget {
@@ -21,6 +22,10 @@ class _BookListTabState extends State<BookListTab> {
                 ListTile(
                     title: Text(model.bookList[index]['title']),
                     subtitle: Text(model.bookList[index]['author']),
+                    trailing: Image.network(
+                      ApiImage.getImage(model.bookList[index]['id'] + '.png'),
+                      fit: BoxFit.fitHeight,
+                    ),
                     onLongPress: () => showMenu(
                             context: context,
                             position: RelativeRect.fromLTRB(100, 100, 100, 200),
