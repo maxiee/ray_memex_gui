@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ray_memex_gui/book/page_home/book_home_model.dart';
-import 'package:ray_memex_gui/book/page_home/tabs/book_list_tab.dart';
+import 'package:ray_memex_gui/book/page_home/tabs/books_tab.dart';
 import 'package:ray_memex_gui/book/page_home/tabs/book_tools_tab.dart';
 
 class BookHomePage extends StatefulWidget {
@@ -31,7 +31,7 @@ class _BookHomePageState extends State<BookHomePage> {
         appBar: AppBar(title: const Text("书库")),
         body: Stack(
           children: [
-            if (_selectedIndex == 0) const BookListTab(),
+            if (_selectedIndex == 0) const BooksTab(),
             if (_selectedIndex == 1) const BookToolsTab(),
             Container()
           ],

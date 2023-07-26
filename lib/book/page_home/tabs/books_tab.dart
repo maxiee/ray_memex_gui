@@ -3,18 +3,17 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:ray_memex_gui/api/api_image.dart';
 import 'package:ray_memex_gui/book/page_home/book_home_model.dart';
+import 'package:ray_memex_gui/book/page_home/widgets/book_home_toolbar.dart';
 
-class BookListTab extends StatefulWidget {
-  const BookListTab({super.key});
+class BooksTab extends StatefulWidget {
+  const BooksTab({super.key});
 
   @override
-  State<BookListTab> createState() => _BookListTabState();
+  State<BooksTab> createState() => _BooksTabState();
 }
 
-class _BookListTabState extends State<BookListTab> {
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<BookHomeModel>(
+class _BooksTabState extends State<BooksTab> {
+  Widget getListView() => Consumer<BookHomeModel>(
       builder: (context, model, child) => ListView.builder(
           itemBuilder: (context, index) {
             return Column(
@@ -51,7 +50,39 @@ class _BookListTabState extends State<BookListTab> {
               ],
             );
           },
-          itemCount: model.bookList.length),
-    );
+          itemCount: model.bookList.length));
+
+  Widget getGridView() => Consumer<BookHomeModel>(
+      builder: (context, model, child) => GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, childAspectRatio: 0.7),
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                Expanded(
+                  child: Image.network(
+                    ApiImage.getImage(model.bookList[index]['id'] + '.png'),
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+                Text(model.bookList[index]['title'],
+                    overflow: TextOverflow.ellipsis),
+                Text(model.bookList[index]['author'],
+                    overflow: TextOverflow.ellipsis),
+              ],
+            );
+          },
+          itemCount: model.bookList.length));
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<BookHomeModel>(
+        builder: (context, model, child) => Column(
+              children: [
+                const BookHomeToolbar(),
+                if (model.mode == MODE_LIST) Expanded(child: getListView()),
+                if (model.mode == MODE_GRID) Expanded(child: getGridView()),
+              ],
+            ));
   }
 }
