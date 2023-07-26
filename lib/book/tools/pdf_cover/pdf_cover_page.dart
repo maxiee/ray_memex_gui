@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class PdfCoverPage extends StatefulWidget {
@@ -12,8 +13,12 @@ class _PdfCoverPageState extends State<PdfCoverPage> {
   TextEditingController pageController = TextEditingController(text: '0');
   String? previewUrl;
 
-  String genUrl(fileName, previewPage) {
+  String genPreviewUrl(String fileName, int previewPage) {
     return 'http://localhost:9003/book/pdf/cover/preview?file_name=$fileName&page=$previewPage';
+  }
+
+  String genSaveUrl(String fileName, int previewPage) {
+    return 'http://localhost:9003/book/pdf/cover/save?file_name=$fileName&page=$previewPage';
   }
 
   @override
@@ -41,7 +46,7 @@ class _PdfCoverPageState extends State<PdfCoverPage> {
             onPressed: () {
               if (textController.text.isNotEmpty) {
                 setState(() {
-                  previewUrl = genUrl(
+                  previewUrl = genPreviewUrl(
                       textController.text, int.parse(pageController.text));
                 });
               }
@@ -49,7 +54,16 @@ class _PdfCoverPageState extends State<PdfCoverPage> {
             child: const Text('预览')),
         if (previewUrl != null) ...[
           const SizedBox(height: 20),
-          Image.network(previewUrl!, height: 300, fit: BoxFit.fitHeight)
+          Image.network(previewUrl!, height: 300, fit: BoxFit.fitHeight),
+          const SizedBox(height: 20),
+          MaterialButton(
+              onPressed: () {
+                Dio()
+                    .get(genSaveUrl(
+                        textController.text, int.parse(pageController.text)))
+                    .then((value) => Navigator.of(context).pop(previewUrl));
+              },
+              child: const Text('上传')),
         ]
       ]),
     );
