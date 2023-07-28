@@ -3,6 +3,7 @@ import 'package:desktop_drop/desktop_drop.dart';
 import 'package:flutter/material.dart';
 import 'package:ray_memex_gui/api/api_book.dart';
 import 'package:ray_memex_gui/book/page_home/book_home_page.dart';
+import 'package:ray_memex_gui/book/page_home/pages/book_edit_page.dart';
 import 'package:ray_memex_gui/widgets/drop_widget.dart';
 
 void main() {
@@ -20,6 +21,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      routes: {
+        '/book/edit': (context) => const BookEditPage(),
+      },
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
