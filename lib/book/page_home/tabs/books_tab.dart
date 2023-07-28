@@ -52,10 +52,15 @@ class _BooksTabState extends State<BooksTab> {
           },
           itemCount: model.bookList.length));
 
+  int getCrossAxisCount() {
+    var width = MediaQuery.of(context).size.width;
+    return (width / 200).floor();
+  }
+
   Widget getGridView() => Consumer<BookHomeModel>(
       builder: (context, model, child) => GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3, childAspectRatio: 0.7),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: getCrossAxisCount(), childAspectRatio: 0.7),
           itemBuilder: (context, index) {
             return Column(
               children: [
