@@ -1,3 +1,4 @@
+import 'package:context_menus/context_menus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ray_memex_gui/book/page_home/book_home_model.dart';
@@ -29,12 +30,14 @@ class _BookHomePageState extends State<BookHomePage> {
       value: model,
       builder: (context, child) => Scaffold(
         appBar: AppBar(title: const Text("书库")),
-        body: Stack(
-          children: [
-            if (_selectedIndex == 0) const BooksTab(),
-            if (_selectedIndex == 1) const BookToolsTab(),
-            Container()
-          ],
+        body: ContextMenuOverlay(
+          child: Stack(
+            children: [
+              if (_selectedIndex == 0) const BooksTab(),
+              if (_selectedIndex == 1) const BookToolsTab(),
+              Container()
+            ],
+          ),
         ),
         bottomNavigationBar: BottomNavigationBar(
           // 添加的底部导航栏

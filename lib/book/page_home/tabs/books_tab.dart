@@ -1,3 +1,4 @@
+import 'package:context_menus/context_menus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -18,33 +19,37 @@ class _BooksTabState extends State<BooksTab> {
           itemBuilder: (context, index) {
             return Column(
               children: [
-                ListTile(
+                ContextMenuRegion(
+                  contextMenu: GenericContextMenu(
+                    buttonConfigs: [
+                      ContextMenuButtonConfig(
+                        '编辑元数据',
+                        onPressed: () {},
+                      ),
+                      ContextMenuButtonConfig(
+                        '拷贝id',
+                        onPressed: () {
+                          Clipboard.setData(
+                              ClipboardData(text: model.bookList[index]['id']));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('已拷贝id'),
+                              duration: Duration(seconds: 1),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  child: ListTile(
                     title: Text(model.bookList[index]['title']),
                     subtitle: Text(model.bookList[index]['author']),
                     trailing: Image.network(
                       ApiImage.getImage(model.bookList[index]['id'] + '.png'),
                       fit: BoxFit.fitHeight,
                     ),
-                    onLongPress: () => showMenu(
-                            context: context,
-                            position: RelativeRect.fromLTRB(100, 100, 100, 200),
-                            items: [
-                              const PopupMenuItem(
-                                value: 'copy_id',
-                                child: Text('拷贝id'),
-                              ),
-                            ]).then((item) {
-                          if (item == 'copy_id') {
-                            Clipboard.setData(ClipboardData(
-                                text: model.bookList[index]['id']));
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('已拷贝id'),
-                                duration: Duration(seconds: 1),
-                              ),
-                            );
-                          }
-                        })),
+                  ),
+                ),
                 // divider
                 const Divider(),
               ],
