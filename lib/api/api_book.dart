@@ -6,6 +6,17 @@ class ApiBook {
     return dio.post('http://localhost:9003/book/info/update', data: info);
   }
 
+  static Future<Map<String, dynamic>> getBookInfo(String id) {
+    final dio = Dio();
+    return dio.get('http://localhost:9003/book/info/$id').then((response) {
+      if (response.statusCode == 200) {
+        return response.data as Map<String, dynamic>;
+      } else {
+        return {};
+      }
+    });
+  }
+
   static Future<dynamic> bookList(int page, int pageSize) async {
     final dio = Dio();
     final response =

@@ -19,7 +19,7 @@ class _BookEditPageState extends State<BookEditPage> {
   final ctlSize = TextEditingController();
   final ctlDescription = TextEditingController();
 
-  late Map<String, dynamic> bookInfo;
+  late Map<String, dynamic> bookInfo = {};
 
   @override
   void initState() {
@@ -56,9 +56,20 @@ class _BookEditPageState extends State<BookEditPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    bookInfo =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    print(bookInfo);
+    String bookId = ModalRoute.of(context)!.settings.arguments as String;
+    ApiBook.getBookInfo(bookId).then((value) {
+      setState(() {
+        bookInfo = value;
+        ctxId.text = bookInfo['id'];
+        ctlTitle.text = bookInfo['title'];
+        ctlAuthor.text = bookInfo['author'];
+        ctlPublisher.text = bookInfo['publisher'] ?? '';
+        ctlPublishYear.text = bookInfo['publish_year']?.toString() ?? '';
+        ctlDescription.text = bookInfo['description'] ?? '';
+        ctlFormat.text = bookInfo['format'] ?? '';
+        ctlSize.text = bookInfo['size'].toString();
+      });
+    });
   }
 
   void requestBookSize() {
@@ -103,57 +114,62 @@ class _BookEditPageState extends State<BookEditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text("编辑书籍元信息")),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView(children: [
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(children: [
-                  Flexible(
-                    fit: FlexFit.loose,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        formItem("ID：", ctxId, bookInfo['id'], editable: false),
-                        const SizedBox(height: 8),
-                        formItem("书名：", ctlTitle, bookInfo['title']),
-                        const SizedBox(height: 8),
-                        formItem("作者：", ctlAuthor, bookInfo['author']),
-                      ],
-                    ),
+        body: bookInfo.isEmpty
+            ? const Center(child: CircularProgressIndicator())
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView(children: [
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(children: [
+                        Flexible(
+                          fit: FlexFit.loose,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              formItem("ID：", ctxId, bookInfo['id'],
+                                  editable: false),
+                              const SizedBox(height: 8),
+                              formItem("书名：", ctlTitle, bookInfo['title']),
+                              const SizedBox(height: 8),
+                              formItem("作者：", ctlAuthor, bookInfo['author']),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: Image.network(
+                            ApiImage.getImage(bookInfo['id'] + '.png'),
+                            width: 120,
+                            fit: BoxFit.fitHeight,
+                          ),
+                        )
+                      ]),
+                      const SizedBox(height: 8),
+                      formItem(
+                          "出版社：", ctlPublisher, bookInfo['publisher'] ?? ''),
+                      const SizedBox(height: 8),
+                      formItem("出版年：", ctlPublishYear,
+                          bookInfo['publish_year']?.toString() ?? ''),
+                      const SizedBox(height: 8),
+                      formItem(
+                          "描述：", ctlDescription, bookInfo['description'] ?? '',
+                          minLines: 4, maxLines: 8),
+                      const SizedBox(height: 8),
+                      formItem("格式：", ctlFormat, bookInfo['format'] ?? ''),
+                      const SizedBox(height: 8),
+                      formItem("大小", ctlSize, bookInfo['size'].toString(),
+                          editable: false,
+                          suffixIcon: IconButton(
+                            onPressed: () => requestBookSize(),
+                            icon: const Icon(Icons.refresh),
+                          )),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Image.network(
-                      ApiImage.getImage(bookInfo['id'] + '.png'),
-                      width: 120,
-                      fit: BoxFit.fitHeight,
-                    ),
-                  )
                 ]),
-                const SizedBox(height: 8),
-                formItem("出版社：", ctlPublisher, bookInfo['publisher'] ?? ''),
-                const SizedBox(height: 8),
-                formItem("出版年：", ctlPublishYear,
-                    bookInfo['publish_year']?.toString() ?? ''),
-                const SizedBox(height: 8),
-                formItem("描述：", ctlDescription, bookInfo['description'] ?? '',
-                    minLines: 4, maxLines: 8),
-                const SizedBox(height: 8),
-                formItem("格式：", ctlFormat, bookInfo['format'] ?? ''),
-                const SizedBox(height: 8),
-                formItem("大小", ctlSize, bookInfo['size'].toString(),
-                    editable: false,
-                    suffixIcon: IconButton(
-                      onPressed: () => requestBookSize(),
-                      icon: const Icon(Icons.refresh),
-                    )),
-              ],
-            ),
-          ]),
-        ),
+              ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => onSave(),
           tooltip: '保存',
