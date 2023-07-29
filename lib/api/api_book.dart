@@ -17,6 +17,16 @@ class ApiBook {
     }
   }
 
+  static Future<double> bookSize(String id) async {
+    final dio = Dio();
+    final response = await dio.get('http://localhost:9003/book/size/$id');
+    if (response.statusCode == 200) {
+      return response.data as double;
+    } else {
+      return -1;
+    }
+  }
+
   static Future<dynamic> uploadPdf(String filePath) async {
     final dio = Dio();
     final response = await dio.post('http://localhost:9003/book/pdf/upload',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ray_memex_gui/api/api_book.dart';
 import 'package:ray_memex_gui/api/api_image.dart';
 
 class BookEditPage extends StatefulWidget {
@@ -32,6 +33,15 @@ class _BookEditPageState extends State<BookEditPage> {
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
   }
 
+  void requestBookSize() {
+    ApiBook.bookSize(bookInfo['id']).then((value) {
+      print('size=$value');
+      setState(() {
+        bookInfo['size'] = value.toString();
+      });
+    });
+  }
+
   Row formItem(String label, TextEditingController controller, String initValue,
       {editable = true,
       IconButton? suffixIcon,
@@ -59,11 +69,6 @@ class _BookEditPageState extends State<BookEditPage> {
         if (suffixIcon != null) suffixIcon,
       ],
     );
-  }
-
-  String parseSize(String? size) {
-    if (size == null || size.isEmpty) return 'Unknown';
-    return '${int.parse(size)}MB';
   }
 
   @override
@@ -111,14 +116,10 @@ class _BookEditPageState extends State<BookEditPage> {
               formItem("格式：", ctlFormat, bookInfo['format'] ?? '',
                   editable: false),
               const SizedBox(height: 8),
-              formItem("大小", ctlSize, parseSize(bookInfo['size']),
+              formItem("大小", ctlSize, bookInfo['size'].toString(),
                   editable: false,
                   suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        ctlSize.text = parseSize(bookInfo['size']);
-                      });
-                    },
+                    onPressed: () => requestBookSize(),
                     icon: const Icon(Icons.refresh),
                   )),
             ],
