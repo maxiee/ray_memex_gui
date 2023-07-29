@@ -61,7 +61,7 @@ class _BooksTabState extends State<BooksTab> {
 
   int getCrossAxisCount() {
     var width = MediaQuery.of(context).size.width;
-    return (width / 200).floor();
+    return (width / 150).floor();
   }
 
   Widget getGridView() => Consumer<BookHomeModel>(
@@ -69,19 +69,28 @@ class _BooksTabState extends State<BooksTab> {
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: getCrossAxisCount(), childAspectRatio: 0.7),
           itemBuilder: (context, index) {
-            return Column(
-              children: [
-                Expanded(
-                  child: Image.network(
-                    ApiImage.getImage(model.bookList[index]['id'] + '.png'),
-                    fit: BoxFit.fitHeight,
+            return Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Image.network(
+                      ApiImage.getImage(model.bookList[index]['id'] + '.png'),
+                      fit: BoxFit.fitHeight,
+                    ),
                   ),
-                ),
-                Text(model.bookList[index]['title'],
-                    overflow: TextOverflow.ellipsis),
-                Text(model.bookList[index]['author'],
-                    overflow: TextOverflow.ellipsis),
-              ],
+                  Text(
+                    model.bookList[index]['title'],
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  Text(model.bookList[index]['author'],
+                      overflow: TextOverflow.ellipsis),
+                ],
+              ),
             );
           },
           itemCount: model.bookList.length));
