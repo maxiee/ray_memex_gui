@@ -2,8 +2,8 @@ import 'package:context_menus/context_menus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ray_memex_gui/webpage/home/tabs/webpage_tools_tab.dart';
+import 'package:ray_memex_gui/webpage/home/tabs/webpages_tab.dart';
 import 'package:ray_memex_gui/webpage/home/webpage_home_model.dart';
-import 'package:ray_memex_gui/webpage/pages/webpage_upload_page.dart';
 
 class WebpageHomePage extends StatefulWidget {
   const WebpageHomePage({super.key});
@@ -29,8 +29,10 @@ class _WebpageHomePageState extends State<WebpageHomePage> {
         builder: (context, child) => Scaffold(
             appBar: AppBar(title: const Text("归档网页库")),
             body: ContextMenuOverlay(
-              child: Stack(
-                  children: [if (_selectedIndex == 1) const WebpageToolsTab()]),
+              child: Stack(children: [
+                if (_selectedIndex == 0) const WebpagesTab(),
+                if (_selectedIndex == 1) const WebpageToolsTab()
+              ]),
             ),
             bottomNavigationBar: BottomNavigationBar(items: const [
               BottomNavigationBarItem(
