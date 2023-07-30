@@ -14,13 +14,13 @@ class WebpageHomeModel extends ChangeNotifier {
     });
   }
 
-  Future<void> loadWebpageList(int page) async {
-    final newItems = await ApiWebpage.webpageList(page, _pageSize);
+  Future<void> loadWebpageList(int pageKey) async {
+    final newItems = await ApiWebpage.webpageList(pageKey, _pageSize);
     final isLastPage = newItems.length < _pageSize;
     if (isLastPage) {
       pagging.appendLastPage(newItems);
     } else {
-      final nextPageKey = page + 1;
+      final nextPageKey = pageKey + _pageSize;
       pagging.appendPage(newItems, nextPageKey);
     }
     notifyListeners();
