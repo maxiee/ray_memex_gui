@@ -98,9 +98,10 @@ class _WebPageUploadPageState extends State<WebPageUploadPage> {
 
     final file = File(latestDownloadedFile!);
     final content = file.readAsStringSync();
-    final url = RegExp(r'<meta name="savepage-url" content="(.*)">')
+    String? url = RegExp(r'<meta name="savepage-url" content="(.*)">')
         .firstMatch(content)
         ?.group(1);
+    url ??= RegExp(r'\burl:\s*(https?://\S+)').firstMatch(content)?.group(1);
     return url ?? '';
   }
 
