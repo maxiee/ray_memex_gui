@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ray_memex_gui/api/api_book.dart';
 import 'package:ray_memex_gui/book/home/book_home_page.dart';
 import 'package:ray_memex_gui/book/pages/book_edit_page.dart';
+import 'package:ray_memex_gui/webpage/home/webpage_home_page.dart';
 import 'package:ray_memex_gui/webpage/pages/webpage_upload_page.dart';
 import 'package:ray_memex_gui/widgets/drop_widget.dart';
 
@@ -22,7 +23,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
+        '/book/home': (context) => const BookHomePage(),
         '/book/edit': (context) => const BookEditPage(),
+        '/webpage/home': (context) => const WebpageHomePage(),
         '/webpage/upload': (context) => const WebPageUploadPage()
       },
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
@@ -82,16 +85,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 child: DropWidget()),
             MaterialButton(
-                onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const BookHomePage(),
-                      ),
-                    ),
+                onPressed: () => Navigator.of(context).pushNamed('/book/home'),
                 child: const Text('书库')),
             MaterialButton(
                 onPressed: () =>
-                    Navigator.of(context).pushNamed('/webpage/upload'),
-                child: const Text('上传网页')),
+                    Navigator.of(context).pushNamed('/webpage/home'),
+                child: const Text('归档网页库')),
           ],
         ),
       ),

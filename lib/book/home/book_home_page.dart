@@ -14,8 +14,6 @@ class BookHomePage extends StatefulWidget {
 
 class _BookHomePageState extends State<BookHomePage> {
   int _selectedIndex = 0; // 底部导航栏当前选中项的索引
-  int currentPage = 1;
-  List<Map<String, dynamic>> bookList = [];
   BookHomeModel model = BookHomeModel();
 
   @override
@@ -41,7 +39,7 @@ class _BookHomePageState extends State<BookHomePage> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           // 添加的底部导航栏
-          items: const <BottomNavigationBarItem>[
+          items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.list),
               label: '图书列表',
