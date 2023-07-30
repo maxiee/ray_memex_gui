@@ -42,6 +42,7 @@ class _WebPageUploadPageState extends State<WebPageUploadPage> {
       'format': ctxExtension.text,
       'size': getSizeInMBfromFile(),
       'site': ctxSite.text,
+      'add_time': DateTime.now().millisecondsSinceEpoch ~/ 1000,
     });
     if (mounted) {
       WebpageHomeModel model =
