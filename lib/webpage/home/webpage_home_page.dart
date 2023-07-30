@@ -19,7 +19,6 @@ class _WebpageHomePageState extends State<WebpageHomePage> {
   @override
   void initState() {
     super.initState();
-    model.loadWebpageList();
   }
 
   @override

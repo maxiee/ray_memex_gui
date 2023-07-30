@@ -16,4 +16,10 @@ class BookHomeModel extends ChangeNotifier {
     bookList.addAll(await ApiBook.bookList(currentPage, 10));
     notifyListeners();
   }
+
+  Future<void> relaod() async {
+    bookList.clear();
+    currentPage = 1;
+    await loadBookList();
+  }
 }

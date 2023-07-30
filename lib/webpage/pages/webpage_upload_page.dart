@@ -2,7 +2,9 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ray_memex_gui/api/api_webpage.dart';
+import 'package:ray_memex_gui/webpage/home/webpage_home_model.dart';
 import 'package:ray_memex_gui/widgets/form.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -41,7 +43,12 @@ class _WebPageUploadPageState extends State<WebPageUploadPage> {
       'size': getSizeInMBfromFile(),
       'site': ctxSite.text,
     });
-    if (mounted) Navigator.pop(context);
+    if (mounted) {
+      WebpageHomeModel model =
+          ModalRoute.of(context)!.settings.arguments! as WebpageHomeModel;
+      await model.relaod();
+      Navigator.pop(context);
+    }
   }
 
   /// 函数：读取 Downloads 目录下的最新的一个文件

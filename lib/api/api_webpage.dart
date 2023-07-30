@@ -26,12 +26,12 @@ abstract class ApiWebpage {
     }
   }
 
-  static Future<dynamic> webpageList(int page, int pageSize) async {
+  static Future<dynamic> webpageList(int key, int pageSize) async {
     final dio = Dio();
     final response =
         await dio.get('http://localhost:9003/webpage/list', queryParameters: {
-      'page': page,
-      'pageSize': pageSize,
+      'key': key,
+      'page_size': pageSize,
     });
     if (response.statusCode == 200) {
       return (response.data as List)
