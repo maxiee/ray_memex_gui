@@ -4,6 +4,7 @@ import 'package:path/path.dart' as p;
 import 'package:flutter/material.dart';
 import 'package:ray_memex_gui/api/api_webpage.dart';
 import 'package:ray_memex_gui/widgets/form.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WebPageUploadPage extends StatefulWidget {
   const WebPageUploadPage({super.key});
@@ -159,6 +160,19 @@ class _WebPageUploadPageState extends State<WebPageUploadPage> {
                         const SizedBox(height: 8),
                         formItem('本地路径', ctxFilePath, latestDownloadedFile!,
                             editable: false),
+                        const SizedBox(height: 8),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            MaterialButton(
+                                onPressed: () => _getLatestDownloadedFile(),
+                                child: const Text('刷新')),
+                            MaterialButton(
+                                onPressed: () =>
+                                    launchUrl(Uri.file(latestDownloadedFile!)),
+                                child: const Text('打开文件')),
+                          ],
+                        )
                       ],
                     ),
                   ),
