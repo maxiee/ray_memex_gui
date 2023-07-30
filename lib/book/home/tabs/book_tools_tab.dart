@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ray_memex_gui/book/tools/pdf_cover/pdf_cover_page.dart';
+import 'package:ray_memex_gui/book/pages/pdf_cover_page.dart';
 
 class BookToolsTab extends StatelessWidget {
   const BookToolsTab({super.key});

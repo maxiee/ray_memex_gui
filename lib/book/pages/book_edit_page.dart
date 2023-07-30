@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ray_memex_gui/api/api_book.dart';
 import 'package:ray_memex_gui/api/api_image.dart';
+import 'package:ray_memex_gui/widgets/form.dart';
 
 class BookEditPage extends StatefulWidget {
   const BookEditPage({super.key});
@@ -79,35 +80,6 @@ class _BookEditPageState extends State<BookEditPage> {
         bookInfo['size'] = value;
       });
     });
-  }
-
-  Row formItem(String label, TextEditingController controller, String initValue,
-      {editable = true,
-      IconButton? suffixIcon,
-      int minLines = 1,
-      int maxLines = 1}) {
-    controller.text = initValue;
-    return Row(
-      children: [
-        SizedBox(width: 60, child: Text(label)),
-        Flexible(
-          fit: FlexFit.loose,
-          child: SizedBox(
-            child: TextField(
-              enabled: editable,
-              controller: controller,
-              minLines: minLines,
-              maxLines: maxLines,
-              decoration: const InputDecoration(
-                isDense: true,
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ),
-        ),
-        if (suffixIcon != null) suffixIcon,
-      ],
-    );
   }
 
   @override

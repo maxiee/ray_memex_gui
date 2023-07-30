@@ -1,9 +1,9 @@
 import 'package:context_menus/context_menus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ray_memex_gui/book/page_home/book_home_model.dart';
-import 'package:ray_memex_gui/book/page_home/tabs/books_tab.dart';
-import 'package:ray_memex_gui/book/page_home/tabs/book_tools_tab.dart';
+import 'package:ray_memex_gui/book/home/book_home_model.dart';
+import 'package:ray_memex_gui/book/home/tabs/books_tab.dart';
+import 'package:ray_memex_gui/book/home/tabs/book_tools_tab.dart';
 
 class BookHomePage extends StatefulWidget {
   const BookHomePage({super.key});

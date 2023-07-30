@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ray_memex_gui/book/page_home/book_home_model.dart';
+import 'package:ray_memex_gui/book/home/book_home_model.dart';
 
 class BookHomeToolbar extends StatelessWidget {
   const BookHomeToolbar({super.key});

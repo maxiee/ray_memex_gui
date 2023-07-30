@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:ray_memex_gui/api/api_image.dart';
-import 'package:ray_memex_gui/book/page_home/book_home_model.dart';
-import 'package:ray_memex_gui/book/page_home/widgets/book_home_toolbar.dart';
+import 'package:ray_memex_gui/book/home/book_home_model.dart';
+import 'package:ray_memex_gui/book/home/widgets/book_home_toolbar.dart';
 
 class BooksTab extends StatefulWidget {
   const BooksTab({super.key});

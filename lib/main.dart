@@ -1,9 +1,9 @@
-import 'package:context_menus/context_menus.dart';
 import 'package:desktop_drop/desktop_drop.dart';
 import 'package:flutter/material.dart';
 import 'package:ray_memex_gui/api/api_book.dart';
-import 'package:ray_memex_gui/book/page_home/book_home_page.dart';
-import 'package:ray_memex_gui/book/page_home/pages/book_edit_page.dart';
+import 'package:ray_memex_gui/book/home/book_home_page.dart';
+import 'package:ray_memex_gui/book/pages/book_edit_page.dart';
+import 'package:ray_memex_gui/webpage/pages/webpage_upload_page.dart';
 import 'package:ray_memex_gui/widgets/drop_widget.dart';
 
 void main() {
@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/book/edit': (context) => const BookEditPage(),
+        '/webpage/upload': (context) => const WebPageUploadPage()
       },
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -53,6 +54,12 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         );
       });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Unsupported file type!'),
+        ),
+      );
     }
   }
 
@@ -81,6 +88,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                 child: const Text('书库')),
+            MaterialButton(
+                onPressed: () =>
+                    Navigator.of(context).pushNamed('/webpage/upload'),
+                child: const Text('上传网页')),
           ],
         ),
       ),
