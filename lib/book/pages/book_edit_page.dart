@@ -45,6 +45,7 @@ class _BookEditPageState extends State<BookEditPage> {
       'description': ctlDescription.text,
       'format': ctlFormat.text,
       'size': size,
+      'add_time': DateTime.now().millisecondsSinceEpoch ~/ 1000,
     }).then((value) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

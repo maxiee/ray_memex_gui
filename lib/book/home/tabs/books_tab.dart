@@ -13,6 +13,17 @@ class BooksTab extends StatefulWidget {
   State<BooksTab> createState() => _BooksTabState();
 }
 
+Text bookTitle(String title) {
+  return Text(
+    title,
+    overflow: TextOverflow.ellipsis,
+    style: const TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 16,
+    ),
+  );
+}
+
 class _BooksTabState extends State<BooksTab> {
   Widget getListView() => Consumer<BookHomeModel>(
       builder: (context, model, child) => ListView.builder(
@@ -44,7 +55,7 @@ class _BooksTabState extends State<BooksTab> {
                     ],
                   ),
                   child: ListTile(
-                    title: Text(model.bookList[index]['title']),
+                    title: bookTitle(model.bookList[index]['title']),
                     subtitle: Text(model.bookList[index]['author']),
                     trailing: Image.network(
                       ApiImage.getImage(model.bookList[index]['id'] + '.png'),
@@ -79,14 +90,7 @@ class _BooksTabState extends State<BooksTab> {
                       fit: BoxFit.fitHeight,
                     ),
                   ),
-                  Text(
-                    model.bookList[index]['title'],
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
+                  bookTitle(model.bookList[index]['title']),
                   Text(model.bookList[index]['author'],
                       overflow: TextOverflow.ellipsis),
                 ],
