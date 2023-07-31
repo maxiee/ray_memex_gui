@@ -17,11 +17,11 @@ class ApiBook {
     });
   }
 
-  static Future<dynamic> bookList(int page, int pageSize) async {
+  static Future<dynamic> bookList(int key, int pageSize) async {
     final dio = Dio();
     final response =
         await dio.get('http://localhost:9003/book/list', queryParameters: {
-      'page': page,
+      'key': key,
       'pageSize': pageSize,
     });
     if (response.statusCode == 200) {
