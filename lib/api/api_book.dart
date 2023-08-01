@@ -22,7 +22,7 @@ class ApiBook {
     final response =
         await dio.get('http://localhost:9003/book/list', queryParameters: {
       'key': key,
-      'pageSize': pageSize,
+      'page_size': pageSize,
     });
     if (response.statusCode == 200) {
       return (response.data as List)
