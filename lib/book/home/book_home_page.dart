@@ -19,7 +19,6 @@ class _BookHomePageState extends State<BookHomePage> {
   @override
   void initState() {
     super.initState();
-    model.loadBookList();
   }
 
   @override

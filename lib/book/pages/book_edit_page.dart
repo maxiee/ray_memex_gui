@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ray_memex_gui/api/api_book.dart';
 import 'package:ray_memex_gui/api/api_image.dart';
+import 'package:ray_memex_gui/book/home/book_home_model.dart';
 import 'package:ray_memex_gui/widgets/form.dart';
 
 class BookEditPage extends StatefulWidget {
@@ -27,7 +28,7 @@ class _BookEditPageState extends State<BookEditPage> {
     super.initState();
   }
 
-  void onSave() {
+  void onSave() async {
     double size = double.parse(ctlSize.text);
     assert(size > 0);
 
@@ -53,12 +54,19 @@ class _BookEditPageState extends State<BookEditPage> {
         ),
       );
     });
+
+    if (mounted) {
+      BookHomeModel model = (ModalRoute.of(context)!.settings.arguments
+          as Map)['model'] as BookHomeModel;
+      await model.relaod();
+    }
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    String bookId = ModalRoute.of(context)!.settings.arguments as String;
+    String bookId =
+        (ModalRoute.of(context)!.settings.arguments as Map)['id'] as String;
     ApiBook.getBookInfo(bookId).then((value) {
       setState(() {
         bookInfo = value;

@@ -39,8 +39,9 @@ class _BooksTabState extends State<BooksTab> {
                         buttonConfigs: [
                           ContextMenuButtonConfig(
                             '编辑元数据',
-                            onPressed: () => Navigator.of(context)
-                                .pushNamed('/book/edit', arguments: item['id']),
+                            onPressed: () => Navigator.of(context).pushNamed(
+                                '/book/edit',
+                                arguments: {'id': item['id'], 'model': model}),
                           ),
                           ContextMenuButtonConfig(
                             '拷贝id',
